@@ -7,6 +7,7 @@ from notes_application.views import *
 
 urlpatterns = patterns('',
     ('^$', show_start_page),
+    ('^login/$', show_login_page),
     url(r'', include('social_auth.urls')),
     # Examples:
     # url(r'^$', 'notes.views.home', name='home'),

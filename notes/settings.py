@@ -123,7 +123,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'notes.notes_application',
-    'social_auth'
+    'social_auth',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
@@ -132,10 +132,19 @@ INSTALLED_APPS = (
 
 AUTHENTICATION_BACKENDS = (
     'social_auth.backends.google.GoogleOAuth2Backend',
+    'social_auth.backends.contrib.evernote.EvernoteBackend',
+    'social_auth.backends.contrib.yandex.YandexBackend',
     )
 
 GOOGLE_OAUTH2_CLIENT_ID      = '627999873306.apps.googleusercontent.com'
 GOOGLE_OAUTH2_CLIENT_SECRET  = '-784UErpsIT-F0Wf4XId6nEV'
+
+YANDEX_OAUTH2_CLIENT_KEY = '77048ebd0b764d5f9a7480019800ed98'
+YANDEX_OAUTH2_CLIENT_SECRET = 'i5222e2f10b004e10902dfb987d415d0c'
+
+EVERNOTE_CONSUMER_KEY = 'qolt'
+EVERNOTE_CONSUMER_SECRET = 'e7f326d984011a2e'
+EVERNOTE_DEBUG = True
 
 LOGIN_URL          = '/login-form/'
 LOGIN_REDIRECT_URL = '/logged-in/'

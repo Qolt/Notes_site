@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}The current time{% endblock %}
+
+{% block content %}
+<p style="margin: 0.4em;">
+    <a href="{% url socialauth_begin 'google-oauth2' %}">Enter Google</a>
+</p>
+<p style="margin: 0.4em;">
+    <a href="{% url socialauth_begin 'yandex' %}">Enter Yandex</a>
+</p>
+<p style="margin: 0.4em;">
+    <a href="{% url socialauth_begin 'evernote' %}">Enter Evernote</a>
+</p>
+{% endblock %}
