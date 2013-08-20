@@ -4,12 +4,18 @@
 
 {% block content %}
 <p style="margin: 0.4em;">
-    <a href="{% url socialauth_begin 'google-oauth2' %}">Enter Google</a>
+    <a href="{% url socialauth_begin 'google-oauth2' %}">Enter with Google</a>
 </p>
 <p style="margin: 0.4em;">
-    <a href="{% url socialauth_begin 'yandex' %}">Enter Yandex</a>
+    <a href="{% url socialauth_begin 'yandex' %}">Enter with Yandex</a>
 </p>
 <p style="margin: 0.4em;">
-    <a href="{% url socialauth_begin 'evernote' %}">Enter Evernote</a>
+    <a href="{% url socialauth_begin 'evernote' %}">Enter with Evernote</a>
+</p>
+<p style="margin: 0.4em;">
+    <a href="{% url socialauth_begin 'vk-oauth' %}">Enter with VK</a>
+</p>
+<p style="margin: 0.4em;">
+    <a href="{% url socialauth_begin 'twitter' %}">Enter with Twitter</a>
 </p>
 {% endblock %}

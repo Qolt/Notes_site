@@ -134,6 +134,8 @@ AUTHENTICATION_BACKENDS = (
     'social_auth.backends.google.GoogleOAuth2Backend',
     'social_auth.backends.contrib.evernote.EvernoteBackend',
     'social_auth.backends.contrib.yandex.YandexBackend',
+    'social_auth.backends.contrib.vk.VKOAuth2Backend',
+    'social_auth.backends.twitter.TwitterBackend',
     )
 
 GOOGLE_OAUTH2_CLIENT_ID      = '627999873306.apps.googleusercontent.com'
@@ -146,9 +148,15 @@ EVERNOTE_CONSUMER_KEY = 'qolt'
 EVERNOTE_CONSUMER_SECRET = 'e7f326d984011a2e'
 EVERNOTE_DEBUG = True
 
-LOGIN_URL          = '/login-form/'
-LOGIN_REDIRECT_URL = '/logged-in/'
+LOGIN_URL          = '/login/'
+LOGIN_REDIRECT_URL = '/'
 LOGIN_ERROR_URL    = '/login-error/'
+
+VK_APP_ID = '3832929'
+VK_API_SECRET = 'MnB12kMdMQEq3rpZKl7O'
+
+TWITTER_CONSUMER_KEY = 'Osz9BLj0O2zl2BPWkmA'
+TWITTER_CONSUMER_SECRET = 'acv1Vx68fqWhYGna07aURklFdgZoomPnQxG3Gnk'
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
