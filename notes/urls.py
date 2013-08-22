@@ -6,8 +6,9 @@ from notes_application.views import *
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-    ('^$', show_start_page),
-    ('^login/$', show_login_page),
+    url('^$', 'notes.notes_application.views.show_start_page', name = "main"),
+    url('^login/$', 'notes.notes_application.views.show_login_page', name = "login"),
+    url('^logout/$', 'notes.notes_application.views.logout', name = "logout"),
     url(r'', include('social_auth.urls')),
     # Examples:
     # url(r'^$', 'notes.views.home', name='home'),
