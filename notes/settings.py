@@ -126,7 +126,7 @@ INSTALLED_APPS = (
     'notes.notes_application',
     'social_auth',
     # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
+    'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
@@ -137,6 +137,7 @@ AUTHENTICATION_BACKENDS = (
     'social_auth.backends.contrib.yandex.YandexBackend',
     'social_auth.backends.contrib.vk.VKOAuth2Backend',
     'social_auth.backends.twitter.TwitterBackend',
+    'django.contrib.auth.backends.ModelBackend',
     )
 
 GOOGLE_OAUTH2_CLIENT_ID      = '627999873306.apps.googleusercontent.com'
