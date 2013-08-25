@@ -3,11 +3,12 @@
 {% block title %}The current time{% endblock %}
 
 {% block content %}
-{%  if user != "Anonymous" %}
-    <a href="{% url logout %}" class="">Logout</a>
-{%else%}
-    <a href="{% url login %}" class="">Login</a>
-{%endif%}
-<p>Hello cruel world.</p>
-<p>You are logged as {{user}}.</p>
+    <p>Hello cruel world.</p>
+    <p>You are logged as {{user}}.</p>
+    {%  if user != "Anonymous" %}
+        <a href="{% url logout %}" class="">Logout</a>
+        <p><a href="{% url create_note%}" class="">Create Note</a></p>
+    {%else%}
+        <a href="{% url login %}" class="">Login</a>
+    {%endif%}
 {% endblock %}
