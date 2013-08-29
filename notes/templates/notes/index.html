@@ -3,12 +3,40 @@
 {% block title %}The current time{% endblock %}
 
 {% block content %}
-    <p>Hello cruel world.</p>
-    <p>You are logged as {{user}}.</p>
-    {%  if user != "Anonymous" %}
-        <a href="{% url logout %}" class="">Logout</a>
-        <p><a href="{% url create_note%}" class="">Create Note</a></p>
-    {%else%}
-        <a href="{% url login %}" class="">Login</a>
-    {%endif%}
+<div class="container">
+    <div class="row">
+    </div>
+    <div class="row">
+    </div>
+<div class="row" >
+    <div class="span8 offset2">
+        <h3><p>You are logged as {{user}}.</p></h3>
+        {%  if user != "Anonymous" %}
+            <a href="{% url logout %}" class="">Logout</a>
+            <p><a href="{% url create_note%}" class="">Create Note</a></p>
+        {%else%}
+    </div>
+</div>
+<div class="row">
+    <div class="span2 offset1">
+        <a href="{% url socialauth_begin 'google-oauth2' %}">Enter with Google</a>
+    </div>
+    <div class="span2">
+        <a href="{% url socialauth_begin 'yandex' %}">Enter with Yandex</a>
+    </div>
+    <div class="span2">
+        <a href="{% url socialauth_begin 'evernote' %}">Enter with Evernote</a>
+    </div>
+    <div class="span2">
+        <a href="{% url socialauth_begin 'vk-oauth' %}">Enter with VK</a>
+    </div>
+    <div class="span2">
+        <a href="{% url socialauth_begin 'twitter' %}">Enter with Twitter</a>
+    </div>
+</div>
+        {%endif%}
+    </div>
+</div>
+
+</div>
 {% endblock %}

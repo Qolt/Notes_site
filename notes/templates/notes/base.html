@@ -3,17 +3,25 @@
 <head>
     <title>{% block title %}{% endblock %}</title>
     <link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="/static/css/main.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="/static/js/jquery.js"></script>
     <script src="/static/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 </head>
 <body>
-    <h1>Body:</h1>
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <div class="brand">Qolt's</div>
+            <ul class="nav">
+                <li><h1>NOTES</h1></li>
+            </ul>
+        </div>
+    </div>
+
     {% block content %}{% endblock %}
     {% block footer %}
-     <div> 
         <hr>
-        <p>Thanks for visiting my site.</p>
-        {% endblock %}
-    </div>
+    {% endblock %}
 </body>
 </html>
