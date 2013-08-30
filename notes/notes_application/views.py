@@ -33,3 +33,8 @@ def create_note(request):
     else:
         form = NoteForm()
     return render_to_response('create_note.html', {'form': form}, context_instance=RequestContext(request))
+
+@login_required
+def notes_list(request):
+    user_notes = Notes.objects.filter(owner = request.user)
+    return render_to_response('notes_list.html', {'notes': user_notes})

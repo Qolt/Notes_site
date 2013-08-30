@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 
-{% block title %}The current time{% endblock %}
+{% block title %}Qolt's Notes{% endblock %}
 
 {% block content %}
 <div class="container">
-    <div class="row">
+    <div class="row main_page_row">
     </div>
-    <div class="row">
+    <div class="row main_page_row ">
     </div>
-<div class="row" >
+<div class="row main_page_row" >
     <div class="span8 offset2">
         <h3><p>You are logged as {{user}}.</p></h3>
         {%  if user != "Anonymous" %}
@@ -17,7 +17,7 @@
         {%else%}
     </div>
 </div>
-<div class="row">
+<div class="row main_page_row">
     <div class="span2 offset1">
         <a href="{% url socialauth_begin 'google-oauth2' %}">Enter with Google</a>
     </div>
