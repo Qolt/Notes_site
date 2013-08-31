@@ -12,8 +12,9 @@
     <div class="span8 offset2">
         <h3><p>You are logged as {{user}}.</p></h3>
         {%  if user != "Anonymous" %}
-            <a href="{% url logout %}" class="">Logout</a>
+           <p><a href="{% url logout %}" class="">Logout</a></p>
             <p><a href="{% url create_note%}" class="">Create Note</a></p>
+            <p><a href="{% url notes_list%}" class="">My notes</a></p>
         {%else%}
     </div>
 </div>

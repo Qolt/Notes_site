@@ -35,6 +35,11 @@ def create_note(request):
     return render_to_response('create_note.html', {'form': form}, context_instance=RequestContext(request))
 
 @login_required
-def notes_list(request):
+def notes_list(request, note_id=0):
     user_notes = Notes.objects.filter(owner = request.user)
-    return render_to_response('notes_list.html', {'notes': user_notes})
+    try:
+        note_text = Notes.objects.get(owner = request.user, id = note_id)
+        text = note_text.text
+    except:
+        text = ""
+    return render_to_response('notes_list.html', {'notes': user_notes, 'note_text': text})

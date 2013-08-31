@@ -5,16 +5,17 @@
 {% block content %}
 <div class="container-fluid ">
   <div class="row-fluid">
-    <div class="span4">
+    <div class="span4 offset1">
       <!--Sidebar content-->
         <ul class="nav nav-pills nav-stacked span4">  
             {% for note in notes %} 
-                <li ><a href="#">{{ note.title }}</a></li>  
+                <li ><a href="{% url notes_list%}{{note.id}}">{{ note.title }}</a></li>  
             {% endfor %}
         </ul>  
     </div>
-    <div class="span8">
+    <div class="span6">
       <!--Body content-->
+         <p>{{note_text}}</p>
     </div>
   </div>
 </div>
