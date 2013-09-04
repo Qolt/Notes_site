@@ -1,18 +1,20 @@
 from django.conf.urls import patterns, include, url
-from notes_application.views import *
+from notes_application import views 
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url('^$', 'notes.notes_application.views.show_start_page', name = "main"),
-    url('^login/$', 'notes.notes_application.views.show_login_page', name = "login"),
-    url('^logout/$', 'notes.notes_application.views.logout', name = "logout"),
+    url('^$', views.show_start_page, name = "main"),
+    url('^login/$', views.show_login_page, name = "login"),
+    url('^logout/$', views.logout, name = "logout"),
     url(r'', include('social_auth.urls')),
-    url('^create_note/$', 'notes.notes_application.views.create_note', name = "create_note"),
-    url('^notes_list/([0-9]+)$', 'notes.notes_application.views.notes_list', name = "notes_list"),
-    url('^notes_list/$', 'notes.notes_application.views.notes_list', name = "notes_list"),
+    url('^create_note/$', views.create_note, name = "create_note"),
+    url('^notes_list/([0-9]+)$', views.notes_list, name = "notes_list"),
+    url('^notes_list/$', views.method_splitter, {'GET': views.notes_list, 'POST': views.save_note}, name = "notes_list"),
+    url('^note_content/([0-9]+)$', views.note_content, name = "note_content"),
+    url('^note_content/$', views.note_content, name = "note_content"),
     # Examples:
     # url(r'^$', 'notes.views.home', name='home'),
     # url(r'^notes/', include('notes.foo.urls')),

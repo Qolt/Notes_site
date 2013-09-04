@@ -3,19 +3,40 @@
 {% block title %}Notes list{% endblock %}
 
 {% block content %}
+
+<script>
+    $(function() {
+        $("#notes_list_ul a").click(function(){
+            var url = $(this).attr("href");
+            $("div.span6").load(url);
+            return false;
+        });
+        $("#create_note_botton").click(function(){
+            var url = $(this).attr("action");
+            $("div.span6").load(url);
+            return false;
+        });
+    });
+</script>
+
 <div class="container-fluid ">
   <div class="row-fluid">
     <div class="span4 offset1">
       <!--Sidebar content-->
-        <ul class="nav nav-pills nav-stacked span4">  
+        <ul id="notes_list_ul" class="nav nav-pills nav-stacked span4">  
+            <li>
+                <form id="create_note_botton" action="{% url create_note%}">
+                    <button type="button" class="btn">Create note</button>
+                </form>
+            </li>
             {% for note in notes %} 
-                <li ><a href="{% url notes_list%}{{note.id}}">{{ note.title }}</a></li>  
+                <li><a href="{% url note_content%}{{note.id}}">{{ note.title }}</a></li>  
             {% endfor %}
         </ul>  
     </div>
     <div class="span6">
       <!--Body content-->
-         <p>{{note_text}}</p>
+        <p>{{note_text}}</p>
     </div>
   </div>
 </div>
