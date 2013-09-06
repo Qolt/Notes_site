@@ -8,7 +8,8 @@
     $(function() {
         $("#notes_list_ul a").click(function(){
             var url = $(this).attr("href");
-            $("div.span6").load(url);
+            $("div.span6").load(url + '/ajax');
+            history.pushState({id: 'NOTE_ID'}, '', url); 
             return false;
         });
         $("#create_note_botton").click(function(){
@@ -16,6 +17,11 @@
             $("div.span6").load(url);
             return false;
         });
+        {% if show_first%}
+            {% for note in notes %}
+                {% if forloop.first %}$("div.span6").load("{% url note_content%}{{note.id}}/ajax");{% endif %}
+            {% endfor %}
+        {% endif %}
     });
 </script>
 
@@ -35,8 +41,8 @@
         </ul>  
     </div>
     <div class="span6">
-      <!--Body content-->
-        <p>{{note_text}}</p>
+      <!--Body content--> 
+        {% include 'note_template.html' %}
     </div>
   </div>
 </div>
