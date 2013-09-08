@@ -5,33 +5,22 @@
 {% block content %}
 
 <script>
-    $(function() {
-        $("#notes_list_ul a").click(function(){
-            var url = $(this).attr("href");
-            $("div.span6").load(url + '/ajax');
-            history.pushState({id: 'NOTE_ID'}, '', url); 
-            return false;
-        });
-        $("#create_note_botton").click(function(){
-            var url = $(this).attr("action");
-            $("div.span6").load(url);
-            return false;
-        });
-        {% if show_first%}
-            {% for note in notes %}
-                {% if forloop.first %}$("div.span6").load("{% url note_content%}{{note.id}}/ajax");{% endif %}
-            {% endfor %}
-        {% endif %}
-    });
+$(function() {
+    {% if show_first%}
+        {% for note in notes %}
+            {% if forloop.first %}$("div.span6").load("{% url note_content%}{{note.id}}/ajax");{% endif %}
+        {% endfor %}
+    {% endif %}
+});
 </script>
 
 <div class="container-fluid ">
   <div class="row-fluid">
     <div class="span4 offset1">
       <!--Sidebar content-->
-        <ul id="notes_list_ul" class="nav nav-pills nav-stacked span4">  
+        <ul id="notes_list_ul" class="nav nav-pills nav-stacked">  
             <li>
-                <form id="create_note_botton" action="{% url create_note%}">
+                <form id="create_note_button" action="{% url create_note%}">
                     <button type="button" class="btn">Create note</button>
                 </form>
             </li>

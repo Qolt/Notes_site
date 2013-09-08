@@ -1,3 +1,18 @@
 <div class="hero-unit">
+    <p>{{note_id}}</p>
     <p>{{note_text}}</p>
+</div>
+<div>
+<script>
+$(function() {
+    $("#delete_note_button").click(function(){
+        var url = $(this).attr("action");
+        $("div.span6").load(url);
+        return false;
+    });
+})
+</script>
+    <form id="delete_note_button" action="{%url delete_note%}{{note_id}}">
+        <button type="button" class="btn" value="">Delete note</button>
+    </form>
 </div>

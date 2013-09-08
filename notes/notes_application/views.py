@@ -51,7 +51,10 @@ def notes_list(request, note_id=0, show_first=False):
         text = note_text.text
     except:
         text = ""  #user_notes[0].text
-    return render_to_response('notes_list.html', {'notes': user_notes, 'note_text': text, 'show_first': show_first})
+    return render_to_response('notes_list.html', {'notes': user_notes, 
+                                                  'note_text': text, 
+                                                  'note_id': note_id, 
+                                                  'show_first': show_first})
 
 @login_required
 def save_note(request):
@@ -70,5 +73,13 @@ def note_content(request, note_id=0):
         text = note_text.text
     except:
         text = ""
-    return render_to_response('note_template.html', {'note_text': text})
+    return render_to_response('note_template.html', {'note_text': text, 'note_id': note_id})
 
+@login_required
+def delete_note(request, note_id=0):
+    try:
+        note = Notes.objects.get(owner = request.user, id = note_id)
+        note.delete()
+    except:
+        pass
+    return HttpResponseRedirect('/notes_list/')
