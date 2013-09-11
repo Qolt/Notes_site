@@ -1,9 +1,7 @@
-<div class="hero-unit">
-    <p>{{note_id}}</p>
-    <p>{{note_text}}</p>
-</div>
 <div>
     <form id="delete_note_button" action="{%url delete_note%}{{note_id}}" method="get">
         <input type="submit" class="btn" value="Delete note">
     </form>
+</div><div class="hero-unit">
+    <p>{{note_text}}</p>
 </div>

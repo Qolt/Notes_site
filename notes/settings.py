@@ -141,6 +141,9 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     )
 
+SOCIAL_AUTH_SESSION_EXPIRATION = False
+SESSION_COOKIE_AGE = 31536000
+
 GOOGLE_OAUTH2_CLIENT_ID      = '627999873306.apps.googleusercontent.com'
 GOOGLE_OAUTH2_CLIENT_SECRET  = '-784UErpsIT-F0Wf4XId6nEV'
 
@@ -155,6 +158,7 @@ LOGIN_URL          = '/login/'
 LOGIN_REDIRECT_URL = '/notes_list/'
 LOGIN_ERROR_URL    = '/login-error/'
 SOCIAL_AUTH_DISCONNECT_REDIRECT_URL = '/'
+
 
 VK_APP_ID = '3832929'
 VK_API_SECRET = 'MnB12kMdMQEq3rpZKl7O'

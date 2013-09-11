@@ -31,6 +31,20 @@ def method_splitter(request, GET=None, POST=None):
     raise Http404
 
 @login_required
+def edit_note(request, note_id=0):
+    try:
+        note = Notes.objects.get(owner = request.user, id = note_id)
+        title = note.title
+        text = note.text
+    except:
+        title = ""
+        text = ""
+    form = NoteForm(
+        initial={'title': title, 'text': text}
+    )
+    return render_to_response('edit_note.html', {'form': form}, context_instance=RequestContext(request))
+
+@login_required
 def create_note(request):
     if request.method == 'POST':
         form = NoteForm(request.POST)
@@ -69,8 +83,8 @@ def save_note(request):
 @login_required
 def note_content(request, note_id=0):
     try:
-        note_text = Notes.objects.get(owner = request.user, id = note_id)
-        text = note_text.text
+        note = Notes.objects.get(owner = request.user, id = note_id)
+        text = note.text
     except:
         text = ""
     return render_to_response('note_template.html', {'note_text': text, 'note_id': note_id})

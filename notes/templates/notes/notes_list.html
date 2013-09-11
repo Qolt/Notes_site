@@ -6,6 +6,7 @@
 
 <script>
 $(function() {
+    $("div.span6").load("{% url note_content%}{{note_id}}/ajax");
     {% if show_first%}
         {% for note in notes %}
             {% if forloop.first %}$("div.span6").load("{% url note_content%}{{note.id}}/ajax");{% endif %}
@@ -31,7 +32,6 @@ $(function() {
     </div>
     <div class="span6">
       <!--Body content--> 
-        {% include 'note_template.html' %}
     </div>
   </div>
 </div>
