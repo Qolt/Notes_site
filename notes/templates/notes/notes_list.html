@@ -6,11 +6,12 @@
 
 <script>
 $(function() {
-    $("div.span6").load("{% url note_content%}{{note_id}}/ajax");
     {% if show_first%}
         {% for note in notes %}
             {% if forloop.first %}$("div.span6").load("{% url note_content%}{{note.id}}/ajax");{% endif %}
         {% endfor %}
+    {% else %}
+        $("div.span6").load("{% url note_content%}{{note_id}}/ajax");
     {% endif %}
 });
 </script>
