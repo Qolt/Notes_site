@@ -1,7 +1,7 @@
 <div>
     <form id="save_note_button" action="{{note_id}}" method="post">{% csrf_token %}
         <input type="submit" class="btn" value="Save">
-        <div class="hero-unit">
+        <div class="hero-unit note_text_area">
             <table class="table">
                 {{ form.as_table}}
             </table>

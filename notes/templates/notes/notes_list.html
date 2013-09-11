@@ -6,6 +6,10 @@
 
 <script>
 $(function() {
+    $(".note_text_area").dblclick(function(){
+        $("div.span6").load("{% url edit_note%}{{ note_id }}");
+        return false;
+    });
     {% if show_first%}
         {% for note in notes %}
             {% if forloop.first %}$("div.span6").load("{% url note_content%}{{note.id}}/ajax");{% endif %}
@@ -31,7 +35,7 @@ $(function() {
             {% endfor %}
         </ul>  
     </div>
-    <div class="span6">
+    <div class="span6 note_text_area">
       <!--Body content--> 
     </div>
   </div>

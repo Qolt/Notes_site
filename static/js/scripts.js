@@ -10,4 +10,8 @@ $(function() {
         $("div.span6").load(url);
         return false;
     });
+    $(".note_text_area").click(function(){
+        $("div.span6").load("{% url edit_note%}{{ note_id }}");
+        return false;
+
 })
