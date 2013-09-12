@@ -5,11 +5,6 @@ $(function() {
         history.pushState({id: 'NOTE_ID'}, '', url); 
         return false;
     });
-    $("#create_note_button").click(function(){
-        var url = $(this).attr("action");
-        $("div.span6").load(url);
-        return false;
-    });
     $(".note_text_area").click(function(){
         $("div.span6").load("{% url edit_note%}{{ note_id }}");
         return false;

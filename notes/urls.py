@@ -18,6 +18,7 @@ urlpatterns = patterns('',
     url('^delete_note/([0-9]+)$', views.delete_note, name = "delete_note"),
     url('^delete_note/$', views.delete_note, name = "delete_note"),
     url('^save_note/$', views.save_note, name = "save_note"),
+    url('^save_note/([0-9]+)$', views.save_note, name = "save_note"),
     url('^edit_note/([0-9]+)$', views.edit_note, name = "edit_note"),
     url('^edit_note/$', views.edit_note, name = "edit_note"),
     # Examples:

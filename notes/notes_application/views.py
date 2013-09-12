@@ -42,18 +42,11 @@ def edit_note(request, note_id=0):
     form = NoteForm(
         initial={'title': title, 'text': text}
     )
-    return render_to_response('edit_note.html', {'form': form}, context_instance=RequestContext(request))
+    return render_to_response('edit_note.html', {'form': form, 'note_id': note_id}, context_instance=RequestContext(request))
 
 @login_required
 def create_note(request):
-    if request.method == 'POST':
-        form = NoteForm(request.POST)
-        if form.is_valid():
-            clean_data = form.cleaned_data
-            Notes(title = clean_data['title'], text = clean_data['text'], owner = request.user).save()
-            return HttpResponseRedirect('/')
-    else:
-        form = NoteForm()
+    form = NoteForm()
     return render_to_response('create_note.html', {'form': form}, context_instance=RequestContext(request))
 
 @login_required
@@ -72,13 +65,19 @@ def notes_list(request, note_id=0):
                                                   'note_id': note_id})
 
 @login_required
-def save_note(request):
+def save_note(request, note_id=None):
     assert request.method == 'POST' 
     form = NoteForm(request.POST)
     if form.is_valid():
         clean_data = form.cleaned_data
-        Notes(title = clean_data['title'], text = clean_data['text'], owner = request.user).save()
-        return HttpResponseRedirect('/notes_list/')
+        if note_id:
+            note = Notes.objects.get(owner = request.user, id = note_id)
+            note.text = clean_data['text']
+            note.title = clean_data['title']
+            note.save()
+        else:
+            Notes(title = clean_data['title'], text = clean_data['text'], owner = request.user).save()
+        return HttpResponseRedirect('/note_content/' + note_id)
 
 
 @login_required

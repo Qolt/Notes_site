@@ -6,8 +6,14 @@
 
 <script>
 $(function() {
-    $(".note_text_area").dblclick(function(){
+    $(".note_text_area").dblclick(function(){ //edit note function. Calling edit form.
         $("div.span6").load("{% url edit_note%}{{ note_id }}");
+        $("div.span6").unbind('dblclick');
+        return false;
+    });
+    $("#create_note_button").click(function(){ //create nate function.
+        var url = $(this).attr("action");
+        $("div.span6").load(url);
         $("div.span6").unbind('dblclick');
         return false;
     });
