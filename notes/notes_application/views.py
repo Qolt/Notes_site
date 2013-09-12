@@ -25,7 +25,7 @@ def logout(request):
 
 def method_splitter(request, GET=None, POST=None):
     if request.method == 'GET' and GET is not None:
-        return GET(request, show_first = True)
+        return GET(request)
     elif request.method == 'POST' and POST is not None:
         return POST(request)
     raise Http404
@@ -57,7 +57,7 @@ def create_note(request):
     return render_to_response('create_note.html', {'form': form}, context_instance=RequestContext(request))
 
 @login_required
-def notes_list(request, note_id=0, show_first=False):
+def notes_list(request, note_id=0):
     assert request.method == 'GET'
     user_notes = Notes.objects.filter(owner = request.user)
     try:
@@ -65,10 +65,11 @@ def notes_list(request, note_id=0, show_first=False):
         text = note_text.text
     except:
         text = ""  #user_notes[0].text
+    if note_id == 0:
+        note_id = user_notes[0].id
     return render_to_response('notes_list.html', {'notes': user_notes, 
                                                   'note_text': text, 
-                                                  'note_id': note_id, 
-                                                  'show_first': show_first})
+                                                  'note_id': note_id})
 
 @login_required
 def save_note(request):

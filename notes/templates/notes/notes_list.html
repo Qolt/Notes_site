@@ -8,18 +8,16 @@
 $(function() {
     $(".note_text_area").dblclick(function(){
         $("div.span6").load("{% url edit_note%}{{ note_id }}");
+        $("div.span6").unbind('dblclick');
         return false;
     });
-    {% if show_first%}
-        {% for note in notes %}
-            {% if forloop.first %}$("div.span6").load("{% url note_content%}{{note.id}}/ajax");{% endif %}
-        {% endfor %}
-    {% else %}
-        $("div.span6").load("{% url note_content%}{{note_id}}/ajax");
-    {% endif %}
+    $('body').tooltip({
+        selector: "[rel=note_edit_tooltip]", 
+        placement: "left", 
+    });
+    $("div.span6").load("{% url note_content%}{{note_id}}/ajax");
 });
 </script>
-
 <div class="container-fluid ">
   <div class="row-fluid">
     <div class="span4 offset1">
