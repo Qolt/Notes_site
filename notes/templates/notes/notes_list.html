@@ -6,22 +6,35 @@
 
 <script>
 $(function() {
-    $(".note_text_area").dblclick(function(){ //edit note function. Calling edit form.
-        $("div.span6").load("{% url edit_note%}{{ note_id }}");
+    $("#li_{{note_id}}").addClass("active");     // add active class to the first note in list
+    function edit_note (){                       //edit note function. Calling edit form.
+        var note_id = $("div.hero-unit").attr("id");
+        $("div.span6").load("{% url edit_note%}" +  note_id);
         $("div.span6").unbind('dblclick');
-        return false;
-    });
-    $("#create_note_button").click(function(){ //create nate function.
+    };
+    $(".note_text_area").dblclick(edit_note)     // calling edit_note function
+    $("#create_note_button").click(function(){   //create note function.
         var url = $(this).attr("action");
         $("div.span6").load(url);
         $("div.span6").unbind('dblclick');
         return false;
     });
-    $('body').tooltip({
+    $('body').tooltip({                          // show tooltip function
         selector: "[rel=note_edit_tooltip]", 
         placement: "left", 
     });
-    $("div.span6").load("{% url note_content%}{{note_id}}/ajax");
+    $("div.span6").load("{% url note_content%}{{note_id}}/ajax"); // load first note
+    $("#notes_list_ul li").click(function(){     // add active class to notes list
+        $("#notes_list_ul li").removeClass("active");
+        $(this).addClass("active");
+    });
+    $("#notes_list_ul a").click(function(event){ // load note content
+        $("div.span6").bind('dblclick', edit_note);
+        var url = $(this).attr("href");
+        $("div.span6").load(url + '/ajax');
+        history.pushState({id: 'NOTE_ID'}, '', url); 
+        event.preventDefault()
+    });
 });
 </script>
 <div class="container-fluid ">
@@ -35,7 +48,7 @@ $(function() {
                 </form>
             </li>
             {% for note in notes %} 
-                <li><a href="{% url note_content%}{{note.id}}">{{ note.title }}</a></li>  
+            <li id="li_{{note.id}}"><a href="{% url note_content%}{{note.id}}">{{ note.title }}</a></li>  
             {% endfor %}
         </ul>  
     </div>
