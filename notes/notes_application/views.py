@@ -76,7 +76,9 @@ def save_note(request, note_id=None):
             note.title = clean_data['title']
             note.save()
         else:
-            Notes(title = clean_data['title'], text = clean_data['text'], owner = request.user).save()
+            note = Notes(title = clean_data['title'], text = clean_data['text'], owner = request.user)
+            note.save()
+            note_id = str(note.id)
         return HttpResponseRedirect('/note_content/' + note_id)
 
 

@@ -9,10 +9,11 @@ $(function() {
     $("#li_{{note_id}}").addClass("active");     // add active class to the first note in list
     function edit_note (){                       //edit note function. Calling edit form.
         var note_id = $("div.hero-unit").attr("id");
-        $("div.span6").load("{% url edit_note%}" +  note_id);
+        $("div.span6").load("{% url edit_note%}" + note_id);
         $("div.span6").unbind('dblclick');
     };
-    $(".note_text_area").dblclick(edit_note)     // calling edit_note function
+    $.listen("click", "#edit_note_btn", edit_note);
+    $(".note_text_area").dblclick(edit_note);    // calling edit_note function
     $("#create_note_button").click(function(){   //create note function.
         var url = $(this).attr("action");
         $("div.span6").load(url);
