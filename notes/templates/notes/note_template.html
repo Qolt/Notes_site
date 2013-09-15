@@ -1,8 +1,8 @@
-<div>
-    <form id="delete_note_button" action="{%url delete_note%}{{note_id}}" method="get">
-        <input type="submit" class="btn" value="Delete note">
-    </form>
-    <button type="button" id="edit_note_btn" class="btn">Edit note</button>
+<div class="btn-group">
+    <button type="button" id="edit_note_btn" class="btn note_botton">Edit note</button>
+    <a href="{%url delete_note%}{{note_id}}">
+        <button type="button" id="edit_note_btn" class="btn note_botton">Delete note</button>
+    </a>
 </div>
 <div class="hero-unit" id="{{note_id}}">
     <p rel="note_edit_tooltip" title="Double click to edit note" >{{note_text}}</p>
