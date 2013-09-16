@@ -1,9 +1,7 @@
-<ul  class="nav nav-pills nav-stacked">  
-    <li>
-        <form id="create_note_button" action="{% url create_note%}">
-            <button type="button" class="btn note_botton">Create note</button>
-        </form>
-    </li>
+<ul id="notes_list_ul" class="nav nav-pills nav-stacked">  
+    <a href="{% url create_note%}">
+        <button type="button" id="create_note_btn" class="btn note_button">Create note</button>
+    </a>
     {% for note in notes %} 
     <li class="notes_list_li" id="li_{{note.id}}"><a href="{% url note_content%}{{note.id}}">{{ note.title }}</a></li>  
     {% endfor %}

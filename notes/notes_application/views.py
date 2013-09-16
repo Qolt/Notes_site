@@ -23,13 +23,6 @@ def logout(request):
     auth.logout(request)
     return HttpResponseRedirect("/")
 
-def method_splitter(request, GET=None, POST=None):
-    if request.method == 'GET' and GET is not None:
-        return GET(request)
-    elif request.method == 'POST' and POST is not None:
-        return POST(request)
-    raise Http404
-
 @login_required
 def edit_note(request, note_id=0):
     try:
@@ -50,19 +43,26 @@ def create_note(request):
     return render_to_response('create_note.html', {'form': form}, context_instance=RequestContext(request))
 
 @login_required
-def notes_list(request, note_id=0):
+def notes_menu(request, note_id = None):
     assert request.method == 'GET'
     user_notes = Notes.objects.filter(owner = request.user)
-    try:
-        note_text = Notes.objects.get(owner = request.user, id = note_id)
-        text = note_text.text
-    except:
-        text = ""  #user_notes[0].text
-    if note_id == 0:
-        note_id = user_notes[0].id
-    return render_to_response('notes_list.html', {'notes': user_notes, 
-                                                  'note_text': text, 
+    if not note_id:
+        try:
+            note_id = user_notes[0].id
+        except:
+            pass
+    return render_to_response('notes_menu.html', {'notes': user_notes, 
                                                   'note_id': note_id})
+@login_required
+def notes_list(request, note_id=None):
+    assert request.method == 'GET'
+    user_notes = Notes.objects.filter(owner = request.user)
+    if not note_id:
+        try:
+            note_id = user_notes[0].id
+        except:
+            pass
+    return render_to_response('notes_list.html', {'note_id': note_id})
 
 @login_required
 def save_note(request, note_id=None):

@@ -11,16 +11,23 @@ urlpatterns = patterns('',
     url('^logout/$', views.logout, name = "logout"),
     url(r'', include('social_auth.urls')),
     url('^create_note/$', views.create_note, name = "create_note"),
-    url('^notes_list/$', views.method_splitter, {'GET': views.notes_list, 'POST': views.save_note}, name = "notes_list"),
+    url('^notes_list/$', views.notes_list, name = "notes_list"),
+
     url('^note_content/([0-9]+)/ajax$', views.note_content, name = "note_content"),
     url('^note_content/$', views.note_content, name = "note_content"),
     url('^note_content/([0-9]+)$', views.notes_list, name = "note_content"),
+
     url('^delete_note/([0-9]+)$', views.delete_note, name = "delete_note"),
     url('^delete_note/$', views.delete_note, name = "delete_note"),
+
     url('^save_note/$', views.save_note, name = "save_note"),
     url('^save_note/([0-9]+)$', views.save_note, name = "save_note"),
+
     url('^edit_note/([0-9]+)$', views.edit_note, name = "edit_note"),
     url('^edit_note/$', views.edit_note, name = "edit_note"),
+
+    url('^notes_menu/([0-9]+)$', views.notes_menu, name = "notes_menu"),
+    url('^notes_menu/$', views.notes_menu, name = "notes_menu"),
     # Examples:
     # url(r'^$', 'notes.views.home', name='home'),
     # url(r'^notes/', include('notes.foo.urls')),

@@ -6,52 +6,54 @@
 
 <script>
 $(function() {
-    $("#li_{{note_id}}").addClass("active");     // add active class to the first note in list
+    $("div.span4").load("{% url notes_menu %}", function(){
+        $("#li_{{note_id}}").addClass("active");     // add active class to the first note in list
+    });
+    $("div.span6").load("{% url note_content%}{{note_id}}/ajax"); // load first note
+
+    function load_note_content(event){ // load note content
+        $("div.span6").bind('dblclick', edit_note);
+        var url = $(this).attr("href");
+        $("div.span6").load(url + '/ajax');
+        history.pushState({id: 'NOTE_ID'}, '', url); 
+        add_active_class($(this).parent("li"));
+        event.preventDefault();
+    };
+    $('body').on('click','#notes_list_ul a', load_note_content);
+
+    function add_active_class(element){     // add active class to notes list
+        $("li.notes_list_li").removeClass("active");
+        element.addClass("active");
+    };
+
+    function create_note() {   //create note function.
+        var url = $(this).parent("a").attr("href");
+        $("div.span6").load(url);
+        $("div.span6").unbind('dblclick');
+        return false;
+    };
+    $('body').on('click','#create_note_btn', create_note);
+
     function edit_note (){                       //edit note function. Calling edit form.
         var note_id = $("div.hero-unit").attr("id");
         $("div.span6").load("{% url edit_note%}" + note_id);
         $("div.span6").unbind('dblclick');
     };
-    $.listen("click", "#edit_note_btn", edit_note);
+    $('body').on('click','#edit_note_btn', edit_note);
+
     $(".note_text_area").dblclick(edit_note);    // calling edit_note function
-    $("#create_note_button").click(function(){   //create note function.
-        var url = $(this).attr("action");
-        $("div.span6").load(url);
-        $("div.span6").unbind('dblclick');
-        return false;
-    });
+
     $('body').tooltip({                          // show tooltip function
         selector: "[rel=note_edit_tooltip]", 
         placement: "left", 
     });
-    $("div.span6").load("{% url note_content%}{{note_id}}/ajax"); // load first note
-    $("#notes_list_ul li").click(function(){     // add active class to notes list
-        $("#notes_list_ul li").removeClass("active");
-        $(this).addClass("active");
-    });
-    $("#notes_list_ul a").click(function(event){ // load note content
-        $("div.span6").bind('dblclick', edit_note);
-        var url = $(this).attr("href");
-        $("div.span6").load(url + '/ajax');
-        history.pushState({id: 'NOTE_ID'}, '', url); 
-        event.preventDefault()
-    });
+
 });
 </script>
 <div class="container-fluid ">
   <div class="row-fluid">
     <div class="span4 offset1">
       <!--Sidebar content-->
-        <ul id="notes_list_ul" class="nav nav-pills nav-stacked">  
-            <li>
-                <form id="create_note_button" action="{% url create_note%}">
-                    <button type="button" class="btn">Create note</button>
-                </form>
-            </li>
-            {% for note in notes %} 
-            <li id="li_{{note.id}}"><a href="{% url note_content%}{{note.id}}">{{ note.title }}</a></li>  
-            {% endfor %}
-        </ul>  
     </div>
     <div class="span6 note_text_area">
       <!--Body content--> 
