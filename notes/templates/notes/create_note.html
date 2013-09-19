@@ -1,8 +1,11 @@
 <div class="hero-unit">
     <form id="create_note_form" action="{% url save_note %}" method="post">{% csrf_token %}
         <table class="table">
+            <td><input type="submit" class="btn save_note_btn" value="Create"></td>
             {{ form.as_table}}
-        <td><input type="submit" class="btn" value="Create"></td>
         </table>
+        {% include "wysiwyg_toolbar.html" %}
+        <div id="editor">
+        </div>
     </form>
 </div>

@@ -1,10 +1,13 @@
 <div>
     <form id="save_note_button" action="{% url save_note %}{{note_id}}" method="post">{% csrf_token %}
-        <input type="submit" class="btn note_botton" value="Save">
+        <input type="submit" class="btn note_botton save_note_btn" value="Save">
         <div class="hero-unit">
             <table class="table">
                 {{ form.as_table}}
             </table>
+            {% include "wysiwyg_toolbar.html" %}
+            <div id="editor">
+            </div>
         </div>
     </form>
 </div>

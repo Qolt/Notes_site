@@ -14,7 +14,7 @@ $(function() {
     function load_note_content(event){ // load note content
         $("div.span6").bind('dblclick', edit_note);
         var url = $(this).attr("href");
-        $("div.span6").load(url + '/ajax');
+        $("div.span6").load(url + '/ajax', call_wysiwyg);
         history.pushState({id: 'NOTE_ID'}, '', url); 
         add_active_class($(this).parent("li"));
         event.preventDefault();
@@ -28,15 +28,20 @@ $(function() {
 
     function create_note() {   //create note function.
         var url = $(this).parent("a").attr("href");
-        $("div.span6").load(url);
+        $("div.span6").load(url, call_wysiwyg);
         $("div.span6").unbind('dblclick');
         return false;
     };
     $('body').on('click','#create_note_btn', create_note);
 
+    function call_wysiwyg_with_content() {
+        call_wysiwyg();
+        $('#editor').html($('#id_text').val());
+    };
+
     function edit_note (){                       //edit note function. Calling edit form.
         var note_id = $("div.hero-unit").attr("id");
-        $("div.span6").load("{% url edit_note%}" + note_id);
+        $("div.span6").load("{% url edit_note%}" + note_id, call_wysiwyg_with_content);
         $("div.span6").unbind('dblclick');
     };
     $('body').on('click','#edit_note_btn', edit_note);
@@ -47,7 +52,18 @@ $(function() {
         selector: "[rel=note_edit_tooltip]", 
         placement: "left", 
     });
+    
+    function call_wysiwyg() {
+        initToolbarBootstrapBindings();  
+        $('#editor').wysiwyg({ fileUploadError: showErrorAlert} );
+        window.prettyPrint && prettyPrint();
+    };
 
+    function save_note() {
+         var r = $('#editor').html();
+         $("#id_text").val(r);
+    };
+    $('body').on('click','.save_note_btn', save_note);
 });
 </script>
 <div class="container-fluid ">

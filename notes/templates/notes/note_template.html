@@ -5,5 +5,7 @@
     </a>
 </div>
 <div class="hero-unit" id="{{note_id}}">
-    <p rel="note_edit_tooltip" title="Double click to edit note" >{{note_text}}</p>
+    <div>
+        {% autoescape off %}{{note_text }}{% endautoescape %}
+    </div>
 </div>
