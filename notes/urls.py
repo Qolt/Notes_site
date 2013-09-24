@@ -13,6 +13,8 @@ urlpatterns = patterns('',
     url('^create_note/$', views.create_note, name = "create_note"),
     url('^notes_list/$', views.notes_list, name = "notes_list"),
 
+    url('^notes_lists/$', views.notes_lists, name = "notes_lists"),
+
     url('^note_content/([0-9]+)/ajax$', views.note_content, name = "note_content"),
     url('^note_content/$', views.note_content, name = "note_content"),
     url('^note_content/([0-9]+)$', views.notes_list, name = "note_content"),
@@ -28,6 +30,8 @@ urlpatterns = patterns('',
 
     url('^notes_menu/([0-9]+)$', views.notes_menu, name = "notes_menu"),
     url('^notes_menu/$', views.notes_menu, name = "notes_menu"),
+
+    url('^notes_menu/(?P<sort>date|importance|shared)$', views.notes_menu, name = "notes_menu"),
     # Examples:
     # url(r'^$', 'notes.views.home', name='home'),
     # url(r'^notes/', include('notes.foo.urls')),

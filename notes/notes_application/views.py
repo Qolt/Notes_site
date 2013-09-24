@@ -11,8 +11,10 @@ from models import Notes
 
 def show_start_page(request):
     if request.user.is_authenticated():
-        return render_to_response('index.html', {'user': request.user.first_name  
-            + " " + request.user.last_name })
+        username = request.user.first_name + " " + request.user.last_name
+        if username == " ":
+            username = request.user.username
+        return render_to_response('index.html', {'user': username})
     else:
         return render_to_response('index.html', {'user': "Anonymous"})
 
@@ -43,9 +45,16 @@ def create_note(request):
     return render_to_response('create_note.html', {'form': form}, context_instance=RequestContext(request))
 
 @login_required
-def notes_menu(request, note_id = None):
+def notes_menu(request, note_id = None, sort=None):
     assert request.method == 'GET'
-    user_notes = Notes.objects.filter(owner = request.user)
+    if sort == "date":
+        user_notes = Notes.objects.filter(owner = request.user).order_by("-last_edit")
+    elif sort == "importance":
+        user_notes = Notes.objects.filter(owner = request.user).order_by("importance")
+    elif sort == "shared":
+        user_notes = Notes.objects.filter(owner = request.user, shared_to = not None)
+    else:
+        user_notes = Notes.objects.filter(owner = request.user)
     if not note_id:
         try:
             note_id = user_notes[0].id
@@ -63,6 +72,11 @@ def notes_list(request, note_id=None):
         except:
             pass
     return render_to_response('notes_list.html', {'note_id': note_id})
+
+
+@login_required
+def notes_lists(request, note_id=None):
+    return render_to_response('notes_lists.html', {})
 
 @login_required
 def save_note(request, note_id=None):

@@ -13,3 +13,8 @@ div {
 .note_button {
     margin-bottom: 50px;
 }
+
+.verticalLine {
+    border-left: thin solid #020202;
+    border-right: thin solid #020202;
+}

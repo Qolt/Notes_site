@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Notes list{% endblock %}
+
+{% block content %}
+
+<script>
+$(function() {
+    $("#list_by_date").load("{% url notes_menu%}date");
+    $("#list_by_priority").load("{% url notes_menu%}importance");
+    $("#shared_list").load("{% url notes_menu%}shared");
+});
+</script>
+
+<div class="container-fluid ">
+  <div class="row-fluid">
+    <div id="list_by_date" class="span4">
+      <!--Sidebar content-->
+    </div>
+    <div id="list_by_priority" class="span4 verticalLine">
+      <!--Body content--> 
+    </div>
+    <div id="shared_list" class="span4">
+      <!--Body content--> 
+    </div>
+  </div>
+</div>
+{% endblock %}
