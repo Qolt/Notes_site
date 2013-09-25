@@ -26,23 +26,22 @@ def logout(request):
     return HttpResponseRedirect("/")
 
 @login_required
-def edit_note(request, note_id=0):
-    try:
-        note = Notes.objects.get(owner = request.user, id = note_id)
-        title = note.title
-        text = note.text
-    except:
-        title = ""
-        text = ""
-    form = NoteForm(
-        initial={'title': title, 'text': text}
-    )
-    return render_to_response('edit_note.html', {'form': form, 'note_id': note_id}, context_instance=RequestContext(request))
-
-@login_required
-def create_note(request):
-    form = NoteForm()
-    return render_to_response('create_note.html', {'form': form}, context_instance=RequestContext(request))
+def edit_note(request, note_id=None):
+    if note_id != None:
+        try:
+            note = Notes.objects.get(owner = request.user, id = note_id)
+            title = note.title
+            text = note.text
+        except:
+            title = ""
+            text = ""
+        form = NoteForm(
+            initial={'title': title, 'text': text}
+        )
+        return render_to_response('edit_note.html', {'form': form, 'note_id': note_id}, context_instance=RequestContext(request))
+    else:
+        form = NoteForm()
+        return render_to_response('edit_note.html', {'form': form}, context_instance=RequestContext(request))
 
 @login_required
 def notes_menu(request, note_id = None, sort=None):

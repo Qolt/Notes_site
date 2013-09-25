@@ -10,7 +10,6 @@ urlpatterns = patterns('',
     url('^login/$', views.show_login_page, name = "login"),
     url('^logout/$', views.logout, name = "logout"),
     url(r'', include('social_auth.urls')),
-    url('^create_note/$', views.create_note, name = "create_note"),
     url('^notes_list/$', views.notes_list, name = "notes_list"),
 
     url('^notes_lists/$', views.notes_lists, name = "notes_lists"),
