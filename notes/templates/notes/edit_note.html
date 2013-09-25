@@ -1,10 +1,21 @@
 <div>
     <form id="save_note_button" action="{% url save_note %}{{note_id}}" method="post">{% csrf_token %}
-        <input type="submit" class="btn note_botton save_note_btn" value="Save">
+        <input type="submit" class="btn note_button save_note_btn" value="Save">
         <div class="hero-unit">
-            <table class="table">
-                {{ form.as_table}}
-            </table>
+            <div class="row-fluid">
+                <div class="span1">
+                    <table class="table">
+                        <tr>
+                            <td><label for="id_title">Title:</label></td>
+                            <td>{{form.title}}</td>
+                            <td>{{form.importance}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{form.text}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
             {% include "wysiwyg_toolbar.html" %}
             <div id="editor">
             </div>

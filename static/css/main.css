@@ -18,3 +18,7 @@ div {
     border-left: thin solid #020202;
     border-right: thin solid #020202;
 }
+
+.priority_drop_down {
+    margin-top: 10px;
+}

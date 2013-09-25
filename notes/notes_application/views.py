@@ -27,7 +27,7 @@ def logout(request):
 
 @login_required
 def edit_note(request, note_id=None):
-    if note_id != None:
+    if note_id:
         try:
             note = Notes.objects.get(owner = request.user, id = note_id)
             title = note.title
