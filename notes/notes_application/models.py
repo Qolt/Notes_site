@@ -9,10 +9,10 @@ class Notes (models.Model):
     last_edit = models.DateTimeField(auto_now = True)
     shared_to = models.ManyToManyField(User, blank=True, null=True, related_name="shared")
     importance = models.TextField (choices = (
-                    ('1', 'Low'),
-                    ('2', 'Normal'),
-                    ('3', 'High'),
-                    ('4', 'Very High'),
+                    (u'Low', u'Low'),
+                    (u'Normal', u'Normal'),
+                    (u'High', u'High'),
+                    (u'Very High', u'Very High'),
     ))
 
     def __unicode__(self):

@@ -22,3 +22,10 @@ div {
 .priority_drop_down {
     margin-top: 10px;
 }
+
+.importance_label {
+    float: left;
+    position: relative; 
+    top: -50px;
+    left: -40px;
+}

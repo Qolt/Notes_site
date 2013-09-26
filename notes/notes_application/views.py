@@ -49,7 +49,7 @@ def notes_menu(request, note_id = None, sort=None):
     if sort == "date":
         user_notes = Notes.objects.filter(owner = request.user).order_by("-last_edit")
     elif sort == "importance":
-        user_notes = Notes.objects.filter(owner = request.user).order_by("importance")
+        user_notes = Notes.objects.filter(owner = request.user).order_by("-importance")
     elif sort == "shared":
         user_notes = Notes.objects.filter(owner = request.user, shared_to = not None)
     else:
@@ -87,9 +87,10 @@ def save_note(request, note_id=None):
             note = Notes.objects.get(owner = request.user, id = note_id)
             note.text = clean_data['text']
             note.title = clean_data['title']
+            note.importance = clean_data['importance']
             note.save()
         else:
-            note = Notes(title = clean_data['title'], text = clean_data['text'], owner = request.user)
+            note = Notes(title = clean_data['title'], text = clean_data['text'], owner = request.user, importance = clean_data['importance'])
             note.save()
             note_id = str(note.id)
         return HttpResponseRedirect('/note_content/' + note_id)
@@ -99,10 +100,10 @@ def save_note(request, note_id=None):
 def note_content(request, note_id=0):
     try:
         note = Notes.objects.get(owner = request.user, id = note_id)
-        text = note.text
     except:
-        text = ""
-    return render_to_response('note_template.html', {'note_text': text, 'note_id': note_id})
+        raise Http404
+    print note.importance
+    return render_to_response('note_template.html', {'note_text': note.text, 'note_id': note_id, 'importance': note.importance})
 
 @login_required
 def delete_note(request, note_id=0):
