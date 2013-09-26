@@ -5,21 +5,27 @@
     </a>
 </div>
 <div class="hero-unit" id="{{note_id}}">
-    <div align="right" class="importance_label" rel="note_edit_tooltip" title="Priority">
-        {% if importance == 'Very High' %}
-            <span class="label label-important">{{importance}}</span>
-        {%endif%}
-        {% if importance == 'High' %}
-            <span class="label label-warning">{{importance}}</span>
-        {%endif%}
-        {% if importance == 'Normal' %}
-            <span class="label label-success">{{importance}}</span>
-        {%endif%}
-        {% if importance == 'Low' %}
-            <span class="label label-info">{{importance}}</span>
-        {%endif%}
-    </div>
-    <div rel="note_edit_tooltip" title="Double click to edit note">
-        {% autoescape off %}{{note_text }}{% endautoescape %}
+    <div class="row-fluid">
+        <div class="span1">
+            <div align="right" class="importance_label" rel="note_edit_tooltip" title="Priority">
+                {% if importance == 'Very High' %}
+                    <span class="label label-important">{{importance}}</span>
+                {%endif%}
+                {% if importance == 'High' %}
+                    <span class="label label-warning">{{importance}}</span>
+                {%endif%}
+                {% if importance == 'Normal' %}
+                    <span class="label label-success">{{importance}}</span>
+                {%endif%}
+                {% if importance == 'Low' %}
+                    <span class="label label-info">{{importance}}</span>
+                {%endif%}
+            </div>
+        </div>
+        <div class="span12">
+            <div rel="note_edit_tooltip" title="Double click to edit note">
+                {% autoescape off %}{{note_text }}{% endautoescape %}
+            </div>
+        </div>
     </div>
 </div>

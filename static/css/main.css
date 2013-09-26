@@ -26,6 +26,7 @@ div {
 .importance_label {
     float: left;
     position: relative; 
-    top: -50px;
+    top: -40px;
     left: -40px;
+    margin-bottom: 0px;
 }

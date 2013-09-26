@@ -32,11 +32,12 @@ def edit_note(request, note_id=None):
             note = Notes.objects.get(owner = request.user, id = note_id)
             title = note.title
             text = note.text
+            importance  = note.importance
         except:
             title = ""
             text = ""
         form = NoteForm(
-            initial={'title': title, 'text': text}
+            initial={'title': title, 'text': text, 'importance': importance}
         )
         return render_to_response('edit_note.html', {'form': form, 'note_id': note_id}, context_instance=RequestContext(request))
     else:
