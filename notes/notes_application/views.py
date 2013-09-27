@@ -98,12 +98,12 @@ def save_note(request, note_id=None):
 
 
 @login_required
-def note_content(request, note_id=0):
-    try:
-        note = Notes.objects.get(owner = request.user, id = note_id)
-    except:
-        raise Http404
-    print note.importance
+def note_content(request, note_id=None):
+    if note_id:
+        try:
+            note = Notes.objects.get(owner = request.user, id = note_id)
+        except:
+            raise Http404
     return render_to_response('note_template.html', {'note_text': note.text, 'note_id': note_id, 'importance': note.importance})
 
 @login_required

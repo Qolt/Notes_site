@@ -9,7 +9,9 @@ $(function() {
     $("#notes_menu").load("{% url notes_menu %}", function(){
         $("#li_{{note_id}}").addClass("active");     // add active class to the first note in list
     });
-    $("div.span6").load("{% url note_content%}{{note_id}}/ajax"); // load first note
+    {% if note_id %}
+        $("div.span6").load("{% url note_content%}{{note_id}}/ajax"); // load first note
+    {% endif %}
 
     function load_note_content(event){ // load note content
         $("div.span6").bind('dblclick', edit_note);
