@@ -17,3 +17,9 @@ class Notes (models.Model):
 
     def __unicode__(self):
         return '%s -- %s' % (self.owner, self.title)
+
+
+class ConfirmEmail (models.Model):
+    user = models.ForeignKey(User)
+    date_created = models.DateTimeField(auto_now_add = True)
+    confirm_code = models.CharField(max_length=33)

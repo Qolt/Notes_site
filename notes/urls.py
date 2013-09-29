@@ -11,6 +11,7 @@ urlpatterns = patterns('',
     url('^logout/$', views.logout, name = "logout"),
     url(r'', include('social_auth.urls')),
     url('^notes_list/$', views.notes_list, name = "notes_list"),
+    url('^add_email/$', views.add_email, name = "add_email"),
 
     url('^notes_lists/$', views.notes_lists, name = "notes_lists"),
 

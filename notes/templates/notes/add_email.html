@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Registration{% endblock %}
+
+{% block content %}
+<form id="save_note_button" action="" method="post">{% csrf_token %}
+    <div class="row-fluid">
+        <div class="span12">
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span12">
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span1 offset5">
+            <table>
+                <tr>
+                    <td>Please, add email:</td>
+                </tr>
+                <tr>
+                    <td>{{ form.email}}</td>
+                </tr>
+                <tr>
+                    <td><input type="submit" class="btn" value="Confirm"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</form>
+{% endblock %}
+

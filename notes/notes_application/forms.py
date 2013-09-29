@@ -11,3 +11,7 @@ class NoteForm(forms.Form):
                     (u'Very High', 'Very High'),
                 )
     importance = forms.ChoiceField(widget=forms.Select, choices=OPTIONS, required=False)
+
+
+class AddEmailForm(forms.Form):
+    email = forms.EmailField()

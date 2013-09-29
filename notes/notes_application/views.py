@@ -2,11 +2,12 @@
 from forms import *
 from django.template import RequestContext
 from django.contrib import auth
-from models import *
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.contrib.auth.decorators import login_required
-from models import Notes
+from django.core.mail import send_mail
+from models import Notes, ConfirmEmail 
+import string, random
 
 
 def show_start_page(request):
@@ -24,6 +25,28 @@ def show_login_page(request):
 def logout(request):
     auth.logout(request)
     return HttpResponseRedirect("/")
+
+@login_required
+def add_email(request):
+    if request.method == 'GET':
+        form = AddEmailForm
+        return render_to_response('add_email.html', {'form': form}, context_instance=RequestContext(request))
+    if request.method == 'POST':
+        form = AddEmailForm(request.POST)
+        if form.is_valid():
+            clean_data = form.cleaned_data
+            confirmation_code = ''.join(random.choice(string.ascii_uppercase + string.digits + string.ascii_lowercase) for x in range(33))
+            content = "http://semenov.ipq.co/confirm/" + confirmation_code
+            send_mail(
+                "Confirm registration",
+                content,
+                'notes.noreplay@gmail.com',
+                [clean_data.get('email', 'noreply@example.com')],
+                fail_silently=False
+            )
+            confirmation = ConfirmEmail(user = request.user, confirm_code = confirmation_code) 
+            confirmation.save()
+            return render_to_response('add_email.html', {'form': form}, context_instance=RequestContext(request))
 
 @login_required
 def edit_note(request, note_id=None):
