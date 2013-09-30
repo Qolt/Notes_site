@@ -2,13 +2,20 @@
 from forms import *
 from django.template import RequestContext
 from django.contrib import auth
+from django.contrib.auth.models import User
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect, HttpResponse, Http404
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.mail import send_mail
 from models import Notes, ConfirmEmail 
-import string, random
+from django.utils.timezone import utc
+import string, random, datetime
 
+def user_with_email(user):
+    if user.email:
+        return True
+    else:
+        return False
 
 def show_start_page(request):
     if request.user.is_authenticated():
@@ -25,6 +32,12 @@ def show_login_page(request):
 def logout(request):
     auth.logout(request)
     return HttpResponseRedirect("/")
+
+def check_email(request):
+    if request.user.email:
+        return HttpResponseRedirect('/notes_list/')
+    else:
+        return HttpResponseRedirect('/add_email/')
 
 @login_required
 def add_email(request):
@@ -44,11 +57,26 @@ def add_email(request):
                 [clean_data.get('email', 'noreply@example.com')],
                 fail_silently=False
             )
-            confirmation = ConfirmEmail(user = request.user, confirm_code = confirmation_code) 
+            ConfirmEmail.objects.filter(user = request.user).delete()
+            confirmation = ConfirmEmail(user = request.user, confirm_code = confirmation_code, email = clean_data['email']) 
             confirmation.save()
-            return render_to_response('add_email.html', {'form': form}, context_instance=RequestContext(request))
+            return HttpResponseRedirect('/')
+        return render_to_response('add_email.html', {'form': form}, context_instance=RequestContext(request))
+
+def confirm_email(request, email_code):
+    try:
+        confirmation = ConfirmEmail.objects.get(confirm_code = email_code) 
+    except:
+        raise Http404
+    if confirmation.date_created > (datetime.datetime.utcnow().replace(tzinfo=utc) - datetime.timedelta(days=1)):
+        user = confirmation.user
+        user.email = confirmation.email
+        user.save()
+        confirmation.delete()
+    return HttpResponseRedirect('/notes_list/')
 
 @login_required
+@user_passes_test(user_with_email, login_url="/add_email/")
 def edit_note(request, note_id=None):
     if note_id:
         try:
@@ -68,6 +96,7 @@ def edit_note(request, note_id=None):
         return render_to_response('edit_note.html', {'form': form}, context_instance=RequestContext(request))
 
 @login_required
+@user_passes_test(user_with_email, login_url="/add_email/")
 def notes_menu(request, note_id = None, sort=None):
     assert request.method == 'GET'
     if sort == "date":
@@ -86,6 +115,7 @@ def notes_menu(request, note_id = None, sort=None):
     return render_to_response('notes_menu.html', {'notes': user_notes, 
                                                   'note_id': note_id})
 @login_required
+@user_passes_test(user_with_email, login_url="/add_email/")
 def notes_list(request, note_id=None):
     assert request.method == 'GET'
     user_notes = Notes.objects.filter(owner = request.user)
@@ -96,12 +126,13 @@ def notes_list(request, note_id=None):
             pass
     return render_to_response('notes_list.html', {'note_id': note_id})
 
-
 @login_required
+@user_passes_test(user_with_email, login_url="/add_email/")
 def notes_lists(request, note_id=None):
     return render_to_response('notes_lists.html', {})
 
 @login_required
+@user_passes_test(user_with_email, login_url="/add_email/")
 def save_note(request, note_id=None):
     assert request.method == 'POST' 
     form = NoteForm(request.POST)
@@ -119,8 +150,8 @@ def save_note(request, note_id=None):
             note_id = str(note.id)
         return HttpResponseRedirect('/note_content/' + note_id)
 
-
 @login_required
+@user_passes_test(user_with_email, login_url="/add_email/")
 def note_content(request, note_id=None):
     if note_id:
         try:
@@ -130,6 +161,7 @@ def note_content(request, note_id=None):
     return render_to_response('note_template.html', {'note_text': note.text, 'note_id': note_id, 'importance': note.importance})
 
 @login_required
+@user_passes_test(user_with_email, login_url="/add_email/")
 def delete_note(request, note_id=0):
     try:
         note = Notes.objects.get(owner = request.user, id = note_id)

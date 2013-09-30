@@ -23,6 +23,8 @@ DATABASES = {
     }
 }
 
+USE_TZ = True 
+
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.4/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = []
@@ -142,7 +144,7 @@ AUTHENTICATION_BACKENDS = (
     )
 
 LOGIN_URL          = '/login/'
-LOGIN_REDIRECT_URL = '/notes_list/'
+LOGIN_REDIRECT_URL = '/check_email/'
 LOGIN_ERROR_URL    = '/login-error/'
 SOCIAL_AUTH_DISCONNECT_REDIRECT_URL = '/'
 

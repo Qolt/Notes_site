@@ -23,3 +23,4 @@ class ConfirmEmail (models.Model):
     user = models.ForeignKey(User)
     date_created = models.DateTimeField(auto_now_add = True)
     confirm_code = models.CharField(max_length=33)
+    email = models.EmailField(blank = True)
