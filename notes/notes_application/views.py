@@ -34,6 +34,9 @@ def logout(request):
     return HttpResponseRedirect("/")
 
 def check_email(request):
+    """
+        View for redirecting users, which just has been logined.
+    """
     if request.user.email:
         return HttpResponseRedirect('/notes_list/')
     else:
@@ -41,6 +44,9 @@ def check_email(request):
 
 @login_required
 def add_email(request):
+    """
+        Show add email page for GET request. Send email confirmation for POST request.
+    """
     if request.method == 'GET':
         form = AddEmailForm
         return render_to_response('add_email.html', {'form': form}, context_instance=RequestContext(request))
@@ -64,6 +70,9 @@ def add_email(request):
         return render_to_response('add_email.html', {'form': form}, context_instance=RequestContext(request))
 
 def confirm_email(request, email_code):
+    """
+        This view calling, when user confirm email. If success email adding.
+    """
     try:
         confirmation = ConfirmEmail.objects.get(confirm_code = email_code) 
     except:
@@ -78,6 +87,9 @@ def confirm_email(request, email_code):
 @login_required
 @user_passes_test(user_with_email, login_url="/add_email/")
 def edit_note(request, note_id=None):
+    """
+        View for adding or editing note.
+    """
     if note_id:
         try:
             note = Notes.objects.get(owner = request.user, id = note_id)
@@ -98,6 +110,9 @@ def edit_note(request, note_id=None):
 @login_required
 @user_passes_test(user_with_email, login_url="/add_email/")
 def notes_menu(request, note_id = None, sort=None):
+    """
+        Returns content fot notes_lists page. Loading by AJAX.
+    """
     assert request.method == 'GET'
     if sort == "date":
         user_notes = Notes.objects.filter(owner = request.user).order_by("-last_edit")
@@ -117,6 +132,9 @@ def notes_menu(request, note_id = None, sort=None):
 @login_required
 @user_passes_test(user_with_email, login_url="/add_email/")
 def notes_list(request, note_id=None):
+    """
+        Return notes list for current user, without a sorting.
+    """
     assert request.method == 'GET'
     user_notes = Notes.objects.filter(owner = request.user)
     if not note_id:
@@ -129,6 +147,9 @@ def notes_list(request, note_id=None):
 @login_required
 @user_passes_test(user_with_email, login_url="/add_email/")
 def notes_lists(request, note_id=None):
+    """
+        Show page with different sortings.
+    """
     return render_to_response('notes_lists.html', {})
 
 @login_required

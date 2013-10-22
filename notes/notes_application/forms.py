@@ -11,6 +11,7 @@ class NoteForm(forms.Form):
                     (u'Very High', 'Very High'),
                 )
     importance = forms.ChoiceField(widget=forms.Select, choices=OPTIONS, required=False)
+    shared_to = forms.CharField(required=False)
 
 
 class AddEmailForm(forms.Form):
