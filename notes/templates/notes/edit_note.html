@@ -2,23 +2,29 @@
     <form id="save_note_button" action="{% url save_note %}{{note_id}}" method="post">{% csrf_token %}
         <input type="submit" class="btn note_button save_note_btn" value="Save">
         <div class="hero-unit">
-            <div class="row-fluid">
+            <div class="row-fluid note_content">
                 <div class="row-fluid">
-                    <div class="row-fluid">
-                        <div class="span1">
-                            <label for="id_title">Title:</label>
-                        </div>
-                        <div class="span6">
-                            {{form.title}}
-                        </div>
-                        <div class="span5">
-                            {{form.importance}}
-                        </div>
+                    <div class="span1 note_content">
+                        <label for="id_title">Title:</label>
                     </div>
-                    <div class="row-fluid">
-                        <div class="span12">
-                            {{form.text}}
-                        </div>
+                    <div class="span6 note_content">
+                        {{form.title}}
+                    </div>
+                    <div class="span5 note_content">
+                        {{form.importance}}
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span4 note_content">
+                        <label for="id_shared_to">Share this note with:</label>
+                    </div>
+                    <div class="span3 note_content">
+                        {{form.shared_to}}
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12">
+                        {{form.text}}
                     </div>
                 </div>
                 <div class="row-fluid">

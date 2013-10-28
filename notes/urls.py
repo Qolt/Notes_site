@@ -14,6 +14,7 @@ urlpatterns = patterns('',
     url('^add_email/$', views.add_email, name = "add_email"),
     url('^check_email/$', views.check_email, name = "check_email"),
     url('^confirm/([A-Za-z0-9]{,33})$', views.confirm_email, name = "confirm"),
+    url('^email_auto_compl/$', views.email_auto_compl, name = "email_auto_compl"),
 
     url('^notes_lists/$', views.notes_lists, name = "notes_lists"),
 

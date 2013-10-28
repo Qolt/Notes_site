@@ -5,7 +5,22 @@
 {% block content %}
 
 <script>
+
+function auto_compl(obj) {
+    $(obj).autocomplete({
+        serviceUrl: '{% url email_auto_compl %}', // Страница для обработки запросов автозаполнения
+        minChars: 2, // Минимальная длина запроса для срабатывания автозаполнения
+        delimiter: /(,|;)\s*/, // Разделитель для нескольких запросов, символ или регулярное выражение
+        maxHeight: 400, // Максимальная высота списка подсказок, в пикселях
+        width: 300, // Ширина списка
+        zIndex: 9999, // z-index списка
+        deferRequestBy: 300, // Задержка запроса (мсек), на случай, если мы не хотим слать миллион запросов, пока пользователь печатает. Я обычно ставлю 300.
+        onSelect: function(data, value){ } // Callback функция, срабатывающая на выбор одного из предложенных вариантов,
+    });
+};
+
 $(function() {
+
     $("#notes_menu").load("{% url notes_menu %}", function(){
         $("#li_{{note_id}}").addClass("active");     // add active class to the first note in list
     });
@@ -59,6 +74,7 @@ $(function() {
         initToolbarBootstrapBindings();  
         $('#editor').wysiwyg({ fileUploadError: showErrorAlert} );
         window.prettyPrint && prettyPrint();
+        auto_compl("#id_shared_to");
     };
 
     function save_note() {
@@ -66,6 +82,7 @@ $(function() {
          $("#id_text").val(r);
     };
     $('body').on('click','.save_note_btn', save_note);
+
 });
 </script>
 <div class="container-fluid ">

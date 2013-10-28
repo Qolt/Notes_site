@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.mail import send_mail
 from models import Notes, ConfirmEmail 
 from django.utils.timezone import utc
-import string, random, datetime
+import string, random, datetime, json
 
 def user_with_email(user):
     if user.email:
@@ -84,6 +84,23 @@ def confirm_email(request, email_code):
         confirmation.delete()
     return HttpResponseRedirect('/notes_list/')
 
+def email_auto_compl(request):
+    """
+        Responce for email autocomplite input field.
+    """
+    response_data = {}
+    response_data['suggestions'] = []
+    if 'query' in request.GET and request.GET['query']:
+        response_data['query'] = request.GET['query']
+        try:
+            users = User.objects.filter(email__icontains = request.GET['query'])
+            for user in users:
+                response_data['suggestions'].append(user.email)
+        except:
+            pass
+        print response_data
+    return HttpResponse(json.dumps(response_data), content_type="application/json")
+
 @login_required
 @user_passes_test(user_with_email, login_url="/add_email/")
 def edit_note(request, note_id=None):
@@ -96,11 +113,12 @@ def edit_note(request, note_id=None):
             title = note.title
             text = note.text
             importance  = note.importance
+            shared_to = ""
         except:
             title = ""
             text = ""
         form = NoteForm(
-            initial={'title': title, 'text': text, 'importance': importance}
+                initial={'title': title, 'text': text, 'importance': importance, 'shared_to': shared_to}
         )
         return render_to_response('edit_note.html', {'form': form, 'note_id': note_id}, context_instance=RequestContext(request))
     else:
@@ -111,7 +129,7 @@ def edit_note(request, note_id=None):
 @user_passes_test(user_with_email, login_url="/add_email/")
 def notes_menu(request, note_id = None, sort=None):
     """
-        Returns content fot notes_lists page. Loading by AJAX.
+        Returns content for notes_lists page. Loading by AJAX.
     """
     assert request.method == 'GET'
     if sort == "date":

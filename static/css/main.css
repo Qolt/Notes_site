@@ -30,3 +30,37 @@ div {
     left: -40px;
     margin-bottom: 0px;
 }
+
+.note_content {
+    text-align: left;
+}
+
+#id_shared_to {
+    width: 285%;
+}
+
+.autocomplete-suggestion { 
+    border:1px 
+    solid #999; 
+    background:#FFF; 
+    cursor:default; 
+    text-align:left; 
+    max-height:350px; 
+    width: 117%;
+    overflow:auto; 
+    margin:1px -1px -1px 1px;
+    /* IE6 specific: */ _height:350px; _margin:0; _overflow-x:hidden;
+}
+.autocomplete-suggestion .selected { 
+    background:#F0F0F0; 
+}
+.autocomplete-suggestion div { 
+    padding:2px 5px; 
+    white-space:nowrap; 
+    overflow:hidden;
+}
+.autocomplete-suggestion strong { 
+    font-weight:normal; 
+    color:#3399FF;
+}
+
